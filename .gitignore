@@ -1,1 +1,6 @@
 .vercel
+
+# Design tooling (skills + audit snapshots) — not part of the deployed site
+.claude/
+.impeccable/
+skills-lock.json

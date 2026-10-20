@@ -15,7 +15,7 @@
             <div class="nav-logo">
                 <span class="logo-text">Aditya</span>
             </div>
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="navMenu">
                 <li class="nav-item">
                     <a href="#home" class="nav-link">Home</a>
                 </li>
@@ -29,16 +29,16 @@
                     <a href="#skills" class="nav-link">Skills</a>
                 </li>
                 <li class="nav-item">
-                    <button class="theme-toggle" id="themeToggle">
-                        <i class="fas fa-moon"></i>
+                    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark and light theme">
+                        <i class="fas fa-moon" aria-hidden="true"></i>
                     </button>
                 </li>
             </ul>
-            <div class="hamburger">
+            <button class="hamburger" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -57,17 +57,17 @@
                 </div>
                 
                 <div class="social-links">
-                    <a href="mailto:aditya.patiyal007@gmail.com" class="social-btn gmail" target="_blank">
-                        <i class="fas fa-envelope"></i>
+                    <a href="mailto:aditya.patiyal007@gmail.com" class="social-btn gmail" aria-label="Email Aditya">
+                        <i class="fas fa-envelope" aria-hidden="true"></i>
                     </a>
-                    <a href="https://www.linkedin.com/in/aditya-patiyal-426284249/" class="social-btn linkedin" target="_blank">
-                        <i class="fab fa-linkedin-in"></i>
+                    <a href="https://www.linkedin.com/in/aditya-patiyal-426284249/" class="social-btn linkedin" target="_blank" rel="noopener noreferrer" aria-label="Aditya on LinkedIn">
+                        <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                     </a>
-                    <a href="https://github.com/Aditya-Patiyal" class="social-btn github" target="_blank">
-                        <i class="fab fa-github"></i>
+                    <a href="https://github.com/Aditya-Patiyal" class="social-btn github" target="_blank" rel="noopener noreferrer" aria-label="Aditya on GitHub">
+                        <i class="fab fa-github" aria-hidden="true"></i>
                     </a>
-                    <a href="https://dev.to/aditya-patiyal" class="social-btn dev" target="_blank">
-                        <i class="fab fa-dev"></i>
+                    <a href="https://dev.to/aditya-patiyal" class="social-btn dev" target="_blank" rel="noopener noreferrer" aria-label="Aditya on DEV">
+                        <i class="fab fa-dev" aria-hidden="true"></i>
                     </a>
                 </div>
 
@@ -80,6 +80,9 @@
             </div>
         </div>
         <div class="hero-bg-animation"></div>
+        <a href="#projects" class="scroll-cue" aria-label="Scroll to projects">
+            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+        </a>
     </section>
 
     <!-- About Section -->
@@ -103,27 +106,7 @@
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1488085061387-422e29b40080?w=500&h=300&fit=crop" alt="Tourism Website">
-                        <div class="project-overlay">
-                            <a href="https://github.com/Aditya-Patiyal/pbl-site" class="project-link" target="_blank">
-                                <i class="fab fa-github"></i>
-                                View Code
-                            </a>
-                            <a href="https://pbl-site.vercel.app/" class="project-link" target="_blank" rel="noopener noreferrer">
-                                <i class="fas fa-external-link-alt"></i>
-                                Live Demo
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <h3>Tourism Website</h3>
-                        <p>Interactive travel and tourism platform with modern UI, responsive design, and smooth animations</p>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=500&h=300&fit=crop" alt="Interactive Browser Games">
+                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=500&h=300&fit=crop" alt="Interactive Browser Games">
                         <div class="project-overlay">
                             <a href="https://github.com/Aditya-Patiyal/Gaming" class="project-link" target="_blank">
                                 <i class="fab fa-github"></i>
@@ -143,7 +126,7 @@
 
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&h=300&fit=crop" alt="Air Trackpad">
+                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&h=300&fit=crop" alt="Air Trackpad">
                         <div class="project-overlay">
                             <a href="https://github.com/Aditya-Patiyal/air-trackpad" class="project-link" target="_blank">
                                 <i class="fab fa-github"></i>
@@ -163,13 +146,13 @@
 
                 <div class="project-card">
                     <div class="project-image">
-                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&h=300&fit=crop" alt="Legal AI Site">
+                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=500&h=300&fit=crop" alt="Legal AI Site">
                         <div class="project-overlay">
                             <a href="https://github.com/Aditya-Patiyal/legal-ai-platform" class="project-link" target="_blank">
                                 <i class="fab fa-github"></i>
                                 View Code
                             </a>
-                            <a href="javascript:void(0)" onclick="alert('Live demo coming soon!')" class="project-link" title="Live demo link pending">
+                            <a href="https://legal-qn-a-self.vercel.app" class="project-link" target="_blank" rel="noopener noreferrer">
                                 <i class="fas fa-external-link-alt"></i>
                                 Live Demo
                             </a>
@@ -178,6 +161,46 @@
                     <div class="project-info">
                         <h3>Legal AI Site</h3>
                         <p>AI-powered legal assistant providing document analysis, legal research, and smart advisory services</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=500&h=300&fit=crop" alt="Text-to-Handwriting">
+                        <div class="project-overlay">
+                            <a href="https://github.com/Aditya-Patiyal/texttohand" class="project-link" target="_blank">
+                                <i class="fab fa-github"></i>
+                                View Code
+                            </a>
+                            <a href="https://text-to-handwriting-gold.vercel.app" class="project-link" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Text-to-Handwriting</h3>
+                        <p>Converts typed text into realistic handwritten pages with adjustable styles, and exports the result as an image or PDF.</p>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img loading="lazy" decoding="async" src="https://images.unsplash.com/photo-1488085061387-422e29b40080?w=500&h=300&fit=crop" alt="Tourism Website">
+                        <div class="project-overlay">
+                            <a href="https://github.com/Aditya-Patiyal/pbl-site" class="project-link" target="_blank">
+                                <i class="fab fa-github"></i>
+                                View Code
+                            </a>
+                            <a href="https://pbl-site.vercel.app/" class="project-link" target="_blank" rel="noopener noreferrer">
+                                <i class="fas fa-external-link-alt"></i>
+                                Live Demo
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Tourism Website</h3>
+                        <p>Interactive travel and tourism platform with modern UI, responsive design, and smooth animations</p>
                     </div>
                 </div>
             </div>
@@ -241,17 +264,17 @@
         <div class="container">
             <h3 class="footer-title">Let's Connect</h3>
             <div class="footer-social">
-                <a href="mailto:aditya.patiyal..07@gmail.com" class="footer-social-btn gmail" target="_blank">
-                    <i class="fas fa-envelope"></i>
+                <a href="mailto:aditya.patiyal007@gmail.com" class="footer-social-btn gmail" aria-label="Email Aditya">
+                    <i class="fas fa-envelope" aria-hidden="true"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/aditya-patiyal-426284249/" class="footer-social-btn linkedin" target="_blank">
-                    <i class="fab fa-linkedin-in"></i>
+                <a href="https://www.linkedin.com/in/aditya-patiyal-426284249/" class="footer-social-btn linkedin" target="_blank" rel="noopener noreferrer" aria-label="Aditya on LinkedIn">
+                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                 </a>
-                <a href="https://github.com/Aditya-Patiyal" class="footer-social-btn github" target="_blank">
-                    <i class="fab fa-github"></i>
+                <a href="https://github.com/Aditya-Patiyal" class="footer-social-btn github" target="_blank" rel="noopener noreferrer" aria-label="Aditya on GitHub">
+                    <i class="fab fa-github" aria-hidden="true"></i>
                 </a>
-                <a href="https://dev.to/aditya-patiyal" class="footer-social-btn dev" target="_blank">
-                    <i class="fab fa-dev"></i>
+                <a href="https://dev.to/aditya-patiyal" class="footer-social-btn dev" target="_blank" rel="noopener noreferrer" aria-label="Aditya on DEV">
+                    <i class="fab fa-dev" aria-hidden="true"></i>
                 </a>
             </div>
             <p class="footer-text">Made with ❤️ by Aditya</p>

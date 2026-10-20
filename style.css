@@ -9,8 +9,9 @@
     /* Dark Theme (Default) */
     --primary-bg: #0a0a0a;
     --secondary-bg: #1a1a1a;
-    --accent-color: #ff0000;
+    --accent-color: #e00000; /* fills: white text on this passes AA (5:1) */
     --accent-hover: #cc0000;
+    --accent-text: #ff3b3b; /* red text on dark bg: passes AA (~4.9:1) */
     --text-primary: #ffffff;
     --text-secondary: #b0b0b0;
     --glass-bg: rgba(26, 26, 26, 0.8);
@@ -24,6 +25,7 @@
     --secondary-bg: #f8f9fa;
     --accent-color: #dc2626;
     --accent-hover: #b91c1c;
+    --accent-text: #dc2626; /* red text on white passes AA (4.8:1) */
     --text-primary: #1a1a1a;
     --text-secondary: #6b7280;
     --glass-bg: rgba(248, 249, 250, 0.8);
@@ -60,6 +62,11 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Theme-safe elevation on scroll (set by JS via .scrolled class) */
+.navbar.scrolled {
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -73,7 +80,7 @@ body {
 .nav-logo .logo-text {
     font-size: 1.8rem;
     font-weight: 700;
-    color: var(--accent-color);
+    color: var(--accent-text);
     text-decoration: none;
 }
 
@@ -93,7 +100,7 @@ body {
 }
 
 .nav-link:hover {
-    color: var(--accent-color);
+    color: var(--accent-text);
 }
 
 .nav-link::after {
@@ -133,6 +140,9 @@ body {
     display: none;
     flex-direction: column;
     cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
 }
 
 .bar {
@@ -167,11 +177,12 @@ body {
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
     margin-bottom: 1rem;
+    letter-spacing: -0.02em;
     animation: fadeInUp 1s ease;
 }
 
 .highlight {
-    color: var(--accent-color);
+    color: var(--accent-text);
     position: relative;
 }
 
@@ -241,7 +252,7 @@ body {
 
 .btn-primary:hover {
     background: transparent;
-    color: var(--accent-color);
+    color: var(--accent-text);
     transform: translateY(-2px);
     box-shadow: 0 10px 20px var(--shadow-color);
 }
@@ -258,6 +269,36 @@ body {
     animation: float 6s ease-in-out infinite;
 }
 
+/* Scroll cue at the base of the hero */
+.scroll-cue {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    text-decoration: none;
+    opacity: 0.75;
+    z-index: 2;
+    animation: cueBounce 2s ease-in-out infinite;
+    transition: color 0.25s ease, opacity 0.25s ease;
+}
+
+.scroll-cue:hover {
+    color: var(--accent-text);
+    opacity: 1;
+}
+
+@keyframes cueBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+}
+
 /* Section Styles */
 section {
     padding: 80px 0;
@@ -268,6 +309,7 @@ section {
     text-align: center;
     margin-bottom: 3rem;
     color: var(--text-primary);
+    letter-spacing: -0.02em;
     position: relative;
 }
 
@@ -312,13 +354,14 @@ section {
     backdrop-filter: blur(10px);
     border-radius: 15px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease;
     border: 1px solid var(--glass-border);
 }
 
 .project-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px var(--shadow-color);
+    border-color: var(--accent-color);
 }
 
 .project-image {
@@ -371,6 +414,22 @@ section {
 
 .project-link:hover {
     background: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+/* Touch devices have no hover: keep project links reachable */
+@media (hover: none) {
+    .project-overlay {
+        opacity: 1;
+        align-items: flex-end;
+        justify-content: center;
+        padding-bottom: 1.25rem;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.45) 45%, transparent 100%);
+    }
+
+    .project-card:hover .project-image img {
+        transform: none;
+    }
 }
 
 .project-info {
@@ -381,10 +440,13 @@ section {
     font-size: 1.3rem;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
+    letter-spacing: -0.01em;
 }
 
 .project-info p {
     color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.65;
 }
 
 /* Skills Section */
@@ -417,7 +479,7 @@ section {
 .skill-category h3 {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-    color: var(--accent-color);
+    color: var(--accent-text);
 }
 
 .skill-items {
@@ -563,6 +625,35 @@ section {
     
     section {
         padding: 60px 0;
+    }
+}
+
+/* Keyboard focus visibility */
+a:focus-visible,
+button:focus-visible,
+.project-link:focus-visible,
+.btn-primary:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* Respect reduced-motion: stop looping/entrance motion, keep hover feedback */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+
+    .hero-bg-animation,
+    .scroll-cue {
+        animation: none;
+    }
+
+    html {
+        scroll-behavior: auto;
     }
 }
 

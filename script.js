@@ -8,6 +8,9 @@ const navbar = document.getElementById('navbar');
 // Theme Management
 let currentTheme = localStorage.getItem('theme') || 'dark';
 
+// Honor the OS reduced-motion preference for JS-driven motion
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // Initialize theme
 function initTheme() {
     if (currentTheme === 'light') {
@@ -37,7 +40,8 @@ function toggleTheme() {
 function toggleMobileNav() {
     hamburger.classList.toggle('active');
     navMenu.classList.toggle('active');
-    
+    hamburger.setAttribute('aria-expanded', hamburger.classList.contains('active'));
+
     // Animate hamburger bars
     const bars = hamburger.querySelectorAll('.bar');
     if (hamburger.classList.contains('active')) {
@@ -55,7 +59,8 @@ function toggleMobileNav() {
 function closeMobileNav() {
     hamburger.classList.remove('active');
     navMenu.classList.remove('active');
-    
+    hamburger.setAttribute('aria-expanded', 'false');
+
     const bars = hamburger.querySelectorAll('.bar');
     bars[0].style.transform = 'none';
     bars[1].style.opacity = '1';
@@ -82,15 +87,9 @@ function smoothScroll(e) {
     }
 }
 
-// Navbar scroll effect
+// Navbar scroll effect (theme-safe: styling lives in .navbar.scrolled)
 function handleNavbarScroll() {
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(26, 26, 26, 0.95)';
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
-    } else {
-        navbar.style.background = 'rgba(26, 26, 26, 0.8)';
-        navbar.style.boxShadow = 'none';
-    }
+    navbar.classList.toggle('scrolled', window.scrollY > 50);
 }
 
 // Active navigation link highlighting
@@ -173,10 +172,11 @@ function typeWriter() {
 
 // Parallax effect for hero background
 function handleParallax() {
+    if (prefersReducedMotion) return;
     const heroSection = document.querySelector('.hero');
     const scrolled = window.pageYOffset;
     const rate = scrolled * -0.5;
-    
+
     if (heroSection) {
         heroSection.style.transform = `translateY(${rate}px)`;
     }
@@ -200,11 +200,13 @@ function enhanceProjectCards() {
     
     projectCards.forEach(card => {
         card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-15px) rotateX(5deg)';
+            // Snappy lift; overrides the slower scroll-reveal transition inline
+            this.style.transition = 'transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease, border-color 0.25s ease';
+            this.style.transform = 'translateY(-10px)';
         });
-        
+
         card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) rotateX(0)';
+            this.style.transform = 'translateY(0)';
         });
     });
 }
@@ -264,12 +266,24 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.addEventListener('click', smoothScroll);
     });
-    
-    // Scroll events
+
+    // Scroll cue uses the same offset-aware smooth scroll
+    const scrollCue = document.querySelector('.scroll-cue');
+    if (scrollCue) {
+        scrollCue.addEventListener('click', smoothScroll);
+    }
+
+    // Scroll events (throttled to one update per frame to avoid layout thrash)
+    let scrollTicking = false;
     window.addEventListener('scroll', () => {
-        handleNavbarScroll();
-        updateActiveNavLink();
-        handleParallax();
+        if (scrollTicking) return;
+        scrollTicking = true;
+        requestAnimationFrame(() => {
+            handleNavbarScroll();
+            updateActiveNavLink();
+            handleParallax();
+            scrollTicking = false;
+        });
     });
     
     // Initialize observers and animations
@@ -277,8 +291,10 @@ document.addEventListener('DOMContentLoaded', function() {
     enhanceProjectCards();
     
     // Delayed animations
+    // Note: typeWriter() intentionally not called — it blanked the <h1> for ~1s
+    // on load (layout shift + empty-title flash). The title now renders immediately
+    // with the CSS fadeInUp entrance.
     setTimeout(() => {
-        typeWriter();
         animateSocialLinks();
     }, 500);
     
@@ -304,11 +320,6 @@ window.addEventListener('resize', function() {
     if (window.innerWidth > 768 && navMenu.classList.contains('active')) {
         closeMobileNav();
     }
-});
-
-// Prevent default behavior for hash links
-window.addEventListener('hashchange', function(e) {
-    e.preventDefault();
 });
 
 // Add loading animation
